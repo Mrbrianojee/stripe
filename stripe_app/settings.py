@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'bootstrapform',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,12 +53,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'stripe.urls'
+ROOT_URLCONF = 'stripe_app.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'accounts', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stripe.wsgi.application'
+WSGI_APPLICATION = 'stripe_app.wsgi.application'
 
 
 # Database
@@ -102,5 +105,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Alternative User model so we can store and email address for each user
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+# Custom user and authentication backend
 AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = ('accounts.backends.EmailAuth',)
+
+# Stripe environment variables
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', '<replace this with your stripe publishable code>')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET', '<replace this with your stripe secret code>')
+

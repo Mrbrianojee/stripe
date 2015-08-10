@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  {% block head_js %}{% endblock %}
+</head>
+<body>
+<div class="container">
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Stripe Basic Payments Site</a>
+      </div>
+      {%  if user.is_authenticated %}
+      <div id="navbar" class="navbar-collapse collapse">
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{%  url 'logout' %}">Logout</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+      {%  endif %}
+    </div><!--/.container-fluid -->
+  </nav>
+  <div class="row">
+    <div class="col-md-12">
+    {% if messages %}
+
+      {% if messages.level == 25 %} <div class="alert alert-error"> {% endif %}
+      {% if messages.level == 30 %} <div class="alert alert-info"> {% endif %}
+      {% if messages.level == 40 %} <div class="alert alert-block"> {% endif %}
+      {% if messages.level == 20 %} <div class="alert alert-success"> {% endif %}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {% for message in messages %}
+          <p {% if message.tags %} class="{{ message.tags }}"{% endif %}><strong><center>{{ message }}</strong></center></p>
+          {% endfor %}
+
+      </div>
+    {% endif %}
+    </div>
+    <div class="col-md-6">{% block content %}{% endblock %}</div>
+  </div>
+</div>
+</body>
+</html>
