@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap %}
+{% load bootstrap_tags %}
 {% load staticfiles %}
 
 {% block head_js %}
@@ -20,7 +20,7 @@
 
     <legend>Create a new account</legend>
     {% csrf_token %}
-    {{ form|bootstrap }}
+    {{ form|as_bootstrap }}
     <div class="form-group">
       <input class="btn btn-primary" id="validate_card_btn" name="commit" type="submit" value="Validate Credit Card">
     </div>
